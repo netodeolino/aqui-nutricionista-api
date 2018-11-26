@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-  const Cidade = sequelize.define('cidade', {
+  return sequelize.define('cidade', {
     id: {
       type: type.INTEGER,
       primaryKey: true,
@@ -7,10 +7,4 @@ module.exports = (sequelize, type) => {
     },
     nome: type.STRING
   })
-
-  Cidade.associate = models => {
-    Cidade.hasMany(models.usuario, { foreignKey: 'usuarioId', targetKey: 'cidade' })
-  }
-
-  return Cidade
 }
