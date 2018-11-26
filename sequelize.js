@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const UsuarioModel = require('./models/usuario')
+const CidadeModel = require('./models/cidade')
 
 const sequelize = new Sequelize('aqui-nutricionista-api', 'netodeolino', 'postgres', {
   host: 'localhost',
@@ -13,6 +14,7 @@ const sequelize = new Sequelize('aqui-nutricionista-api', 'netodeolino', 'postgr
 })
 
 const Usuario = UsuarioModel(sequelize, Sequelize)
+const Cidade = CidadeModel(sequelize, Sequelize)
 
 sequelize.sync({ force: true })
   .then(() => {
@@ -20,5 +22,5 @@ sequelize.sync({ force: true })
   })
 
 module.exports = {
-  Usuario
+  Usuario, Cidade
 }
