@@ -1,4 +1,5 @@
-const { Usuario } = require('../sequelize')
+const { PAPEL_NUTRICIONISTA_ID } = require('../configs/constants')
+const { Usuario, Papel } = require('../sequelize')
 
 const all = async (req, res) => {
   Usuario.findAll().then(usuarios => {
@@ -12,6 +13,20 @@ const create = async (req, res) => {
   })
 }
 
+const allNutricionsita = async (req, res) => {
+  Usuario.findAll({
+    include: [{
+      model: Papel,
+      required: true,
+      where: {
+        id: PAPEL_NUTRICIONISTA_ID
+      }
+    }]
+  }).then(usuarios => {
+    res.json(usuarios)
+  })
+}
+
 module.exports = {
-  all, create
+  all, create, allNutricionsita
 }

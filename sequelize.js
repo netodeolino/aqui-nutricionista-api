@@ -38,7 +38,7 @@ Bairro.hasMany(Usuario, { foreignKey: 'fk_bairro_id' })
 Papel.belongsToMany(Usuario, { through: UsuarioPapel })
 Usuario.belongsToMany(Papel, { through: UsuarioPapel })
 
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
   .then(() => {
     console.log(`Database & tables created!`)
   })

@@ -1,0 +1,5 @@
+const PAPEL_NUTRICIONISTA_ID = 2;
+
+module.exports = {
+  PAPEL_NUTRICIONISTA_ID
+}
