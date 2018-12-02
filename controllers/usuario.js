@@ -27,6 +27,16 @@ const allNutricionsita = async (req, res) => {
   })
 }
 
+const findOne = async (req, res) => {
+  Usuario.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(usuario => {
+    res.json(usuario)
+  })
+}
+
 module.exports = {
-  all, create, allNutricionsita
+  all, create, allNutricionsita, findOne
 }
