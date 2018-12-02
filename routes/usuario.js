@@ -7,6 +7,6 @@ router.get('/', controller.all)
 router.get('/all-nutricionista', controller.allNutricionsita)
 router.get('/:id', controller.findOne)
 
-router.post('/', controller.create)
+router.post('/', controller.saveUsuario)
 
 module.exports = router

@@ -1,15 +1,17 @@
-var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
-var cors = require('cors')
+const express = require('express')
+const cors = require('cors')
+const fileUpload = require('express-fileupload')
 
-var indexRouter = require('./routes/index')
-var usuarioRouter = require('./routes/usuario')
+const indexRouter = require('./routes/index')
+const usuarioRouter = require('./routes/usuario')
 
-var app = express()
+const app = express()
 
 app.use(cors())
+app.use(fileUpload())
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
