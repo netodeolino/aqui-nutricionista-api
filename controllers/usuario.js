@@ -1,5 +1,5 @@
 const { PAPEL_NUTRICIONISTA_ID } = require('../utils/constants')
-const { Usuario, Papel } = require('../sequelize')
+const { Usuario, Papel } = require('../configs/sequelize/sequelize')
 
 const all = async (req, res) => {
   Usuario.findAll()

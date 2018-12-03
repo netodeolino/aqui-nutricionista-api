@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize')
 
-const UsuarioModel = require('./models/usuario')
-const CidadeModel = require('./models/cidade')
-const BairroModel = require('./models/bairro')
-const PapelModel = require('./models/papel')
-const UsuarioPapelModel = require('./models/usuario_papel')
+const UsuarioModel = require('../../models/usuario')
+const CidadeModel = require('../../models/cidade')
+const BairroModel = require('../../models/bairro')
+const PapelModel = require('../../models/papel')
+const UsuarioPapelModel = require('../../models/usuario_papel')
 
 const sequelize = new Sequelize('aqui-nutricionista-api', 'netodeolino', 'postgres', {
   host: 'localhost',
