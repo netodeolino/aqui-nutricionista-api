@@ -1,4 +1,4 @@
-const { PAPEL_NUTRICIONISTA_ID } = require('../utils/constants')
+const { PAPEL_NUTRICIONISTA_NOME } = require('../utils/constants')
 const { Usuario, Papel } = require('../configs/sequelize/sequelize')
 
 const all = async (req, res) => {
@@ -37,7 +37,7 @@ const allNutricionsita = async (req, res) => {
       model: Papel,
       required: true,
       where: {
-        id: PAPEL_NUTRICIONISTA_ID
+        nome: PAPEL_NUTRICIONISTA_NOME
       }
     }]
   }).then(usuarios => {
