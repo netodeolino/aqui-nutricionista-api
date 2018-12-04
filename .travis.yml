@@ -8,6 +8,6 @@ services:
   - postgresql
 before_script:
   - cp configs/sequelize/sequelize.ci.js configs/sequelize/sequelize.js
-  - psql -c 'create database aqui-nutricionista-api-ci;' -U postgres
+  - psql -c 'create database aqui_nutricionista_api_ci;' -U postgres
 script:
   - npm run test
