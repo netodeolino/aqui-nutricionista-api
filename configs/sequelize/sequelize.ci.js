@@ -17,7 +17,8 @@ const sequelize = new Sequelize('aqui_nutricionista_api_test', 'netodeolino', 'p
   },
   define: {
     underscored: true
-  }
+  },
+  logging: false
 })
 
 const Usuario = UsuarioModel(sequelize, Sequelize)
