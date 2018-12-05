@@ -6,7 +6,7 @@ const BairroModel = require('../../models/bairro')
 const PapelModel = require('../../models/papel')
 const UsuarioPapelModel = require('../../models/usuario_papel')
 
-const sequelize = new Sequelize('aqui_nutricionista_api_ci', 'netodeolino', 'postgres', {
+const sequelize = new Sequelize('aqui_nutricionista_api_test', 'netodeolino', 'postgres', {
   host: 'localhost',
   dialect: 'postgres',
   pool: {

@@ -8,6 +8,7 @@ services:
   - postgresql
 before_script:
   - cp configs/sequelize/sequelize.ci.js configs/sequelize/sequelize.js
-  - psql -c 'create database aqui_nutricionista_api_ci;' -U postgres
+  - psql -c "create user netodeolino with password 'postgres';" -U postgres
+  - psql -c 'create database aqui_nutricionista_api_test;' -U postgres
 script:
   - npm run test
