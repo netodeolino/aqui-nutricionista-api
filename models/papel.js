@@ -1,9 +1,9 @@
 module.exports = (sequelize, type) => {
   return sequelize.define('papel', {
     id: {
-      type: type.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+      type: type.UUID,
+      defaultValue: type.UUIDV1,
+      primaryKey: true
     },
     nome: type.STRING
   })

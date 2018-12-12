@@ -9,6 +9,7 @@
     "test:coverage": "nyc --reporter=html --reporter=text npm run test"
   },
   "dependencies": {
+    "bcrypt": "3.0.1",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
