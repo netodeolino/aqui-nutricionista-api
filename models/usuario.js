@@ -7,6 +7,14 @@ module.exports = (sequelize, type) => {
       defaultValue: type.UUIDV1,
       primaryKey: true
     },
+    email: {
+      type: type.STRING,
+      isUnique: true,
+      validade: {
+        isEmail: true,
+        notNull: true
+      }
+    },
     nome: type.STRING,
     senha: type.STRING,
     foto: type.STRING

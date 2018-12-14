@@ -1,5 +1,7 @@
 const { PAPEL_NUTRICIONISTA_NOME } = require('../utils/constants')
 const { Usuario, Papel } = require('../configs/sequelize/sequelize')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const all = async (req, res) => {
   Usuario.findAll()
@@ -35,7 +37,7 @@ const saveUsuario = async (req, res) => {
     })
 }
 
-const allNutricionsita = async (req, res) => {
+const allNutricionista = async (req, res) => {
   Usuario.findAll({
     include: [{
       model: Papel,
@@ -65,6 +67,24 @@ const findOne = async (req, res) => {
   })
 }
 
+const login = async (req, res) => {
+  const { email, senha } = req.body
+  Usuario.findOne({
+    where: {
+      email: email
+    }
+  }).then(usuario => {
+    if (bcrypt.compareSync(senha, usuario.senha)) {
+      res.json(jwt.sign({ email: usuario.email }, 'colocar.no.env', { expiresIn: 60 * 60 }))
+    } else {
+      throw 'Senha incorreta'
+    }
+  })
+  .catch(err => {
+    res.status(500).send(err)
+  })
+}
+
 module.exports = {
-  all, saveUsuario, allNutricionsita, findOne
+  all, saveUsuario, allNutricionista, findOne, login
 }
