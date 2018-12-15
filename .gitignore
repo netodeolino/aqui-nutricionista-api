@@ -62,7 +62,3 @@ typings/
 
 # Mac files
 .DS_Store
-
-# Test files
-.nyc_output
-coverage

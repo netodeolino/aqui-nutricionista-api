@@ -1,7 +1,9 @@
-const { PAPEL_NUTRICIONISTA_NOME } = require('../utils/constants')
-const { Usuario, Papel } = require('../configs/sequelize/sequelize')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+require("dotenv-safe").load()
+
+const { PAPEL_NUTRICIONISTA_NOME, TOKEN_TEMPO_VALIDO } = require('../utils/constants')
+const { Usuario, Papel } = require('../configs/sequelize/sequelize')
 
 const all = async (req, res) => {
   Usuario.findAll()
@@ -75,7 +77,7 @@ const login = async (req, res) => {
     }
   }).then(usuario => {
     if (bcrypt.compareSync(senha, usuario.senha)) {
-      res.json(jwt.sign({ email: usuario.email }, 'colocar.no.env', { expiresIn: 60 * 60 }))
+      res.json(jwt.sign({ email: usuario.email }, process.env.SECRET, { expiresIn: TOKEN_TEMPO_VALIDO }))
     } else {
       throw 'Senha incorreta'
     }

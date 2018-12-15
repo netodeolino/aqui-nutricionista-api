@@ -7,13 +7,11 @@ const fileUpload = require('express-fileupload')
 
 const indexRouter = require('./routes/index')
 const usuarioRouter = require('./routes/usuario')
-const { isTokenValido } = require('./utils/seguranca')
 
 const app = express()
 
 app.use(cors())
 app.use(fileUpload())
-app.use(isTokenValido)
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
