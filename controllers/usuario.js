@@ -77,7 +77,8 @@ const login = async (req, res) => {
     }
   }).then(usuario => {
     if (bcrypt.compareSync(senha, usuario.senha)) {
-      res.json(jwt.sign({ email: usuario.email }, process.env.SECRET, { expiresIn: TOKEN_TEMPO_VALIDO }))
+      let token = jwt.sign({ email: usuario.email }, process.env.SECRET, { expiresIn: TOKEN_TEMPO_VALIDO })
+      res.json({ token, usuarioId: usuario.id, foto: usuario.foto })
     } else {
       throw 'Senha incorreta'
     }
