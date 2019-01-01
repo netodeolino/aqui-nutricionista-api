@@ -10,7 +10,7 @@ function isTokenValido (req, res, next) {
   }
   jwt.verify(token, process.env.SECRET, function(err, decoded) {
     if (err) {
-      return res.status(500).send(TOKEN_INVALIDO)
+      res.status(500).send(TOKEN_INVALIDO)
     }
     req.emailUsuarioLogado = decoded.email
     next()
