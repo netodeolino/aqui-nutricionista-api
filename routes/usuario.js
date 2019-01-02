@@ -2,11 +2,12 @@ const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/usuario')
 
-const { isTokenValido } = require('../utils/seguranca')
+const { isTokenValidoMiddleware } = require('../utils/seguranca')
 
 router.get('/', controller.all)
 router.get('/all-nutricionista', controller.allNutricionista)
-router.get('/:id', isTokenValido, controller.findOne)
+router.get('/:id', isTokenValidoMiddleware, controller.findOne)
+router.get('/token-valido', controller.isTokenValidoUsuario)
 
 router.post('/', controller.saveUsuario)
 router.post('/login', controller.login)
