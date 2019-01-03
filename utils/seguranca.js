@@ -18,7 +18,6 @@ function isTokenValidoMiddleware (req, res, next) {
 }
 
 function isTokenValido (token) {
-  console.log('TOKEEEEEN', token)
   if (!token) {
     return false
   }

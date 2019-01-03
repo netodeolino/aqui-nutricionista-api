@@ -4,7 +4,6 @@ require("dotenv-safe").load()
 
 const { PAPEL_NUTRICIONISTA_NOME, TOKEN_TEMPO_VALIDO } = require('../utils/constants')
 const { Usuario, Papel } = require('../configs/sequelize/sequelize')
-const { isTokenValido } = require('../utils/seguranca')
 
 const all = async (req, res) => {
   Usuario.findAll()
@@ -89,12 +88,6 @@ const login = async (req, res) => {
   })
 }
 
-const isTokenValidoUsuario = async (req, res) => {
-  console.log('AQUIIIII')
-  let isValido = await isTokenValido(req.headers['aqui-nutricionista-token'])
-  res.json(isValido)
-}
-
 module.exports = {
-  all, saveUsuario, allNutricionista, findOne, login, isTokenValidoUsuario
+  all, saveUsuario, allNutricionista, findOne, login
 }
