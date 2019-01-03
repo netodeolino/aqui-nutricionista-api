@@ -1,7 +1,7 @@
 require("dotenv-safe").load()
 const jwt = require('jsonwebtoken')
 
-const { TOKEN_OBRIGATORIO, TOKEN_INVALIDO } = require('./constants')
+const { TOKEN_OBRIGATORIO, TOKEN_INVALIDO, ERRO_VERIFICAR_TOKEN } = require('./constants')
 
 function isTokenValidoMiddleware (req, res, next) {
   const token = req.headers['aqui-nutricionista-token']
@@ -21,12 +21,11 @@ function isTokenValido (token) {
   if (!token) {
     return false
   }
-  jwt.verify(token, process.env.SECRET, function(err, decoded) {
-    if (err) {
-      return false
-    }
-    return true
-  })
+  try {
+    return jwt.verify(token, process.env.SECRET)
+  } catch (error) {
+    throw ERRO_VERIFICAR_TOKEN
+  }
 }
 
 module.exports = {
