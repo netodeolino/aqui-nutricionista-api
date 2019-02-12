@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize')
 
-const UsuarioModel = require('../../models/usuario')
-const CidadeModel = require('../../models/cidade')
-const BairroModel = require('../../models/bairro')
 const PapelModel = require('../../models/papel')
+const CidadeModel = require('../../models/cidade')
+const EstadoModel = require('../../models/estado')
+const UsuarioModel = require('../../models/usuario')
+const EnderecoModel = require('../../models/endereco')
 const UsuarioPapelModel = require('../../models/usuario_papel')
 
 const sequelize = new Sequelize('aqui_nutricionista_api_test', 'netodeolino', 'postgres', {
@@ -21,23 +22,24 @@ const sequelize = new Sequelize('aqui_nutricionista_api_test', 'netodeolino', 'p
   logging: false
 })
 
-const Usuario = UsuarioModel(sequelize, Sequelize)
-const Cidade = CidadeModel(sequelize, Sequelize)
-const Bairro = BairroModel(sequelize, Sequelize)
 const Papel = PapelModel(sequelize, Sequelize)
+const Cidade = CidadeModel(sequelize, Sequelize)
+const Estado = EstadoModel(sequelize, Sequelize)
+const Usuario = UsuarioModel(sequelize, Sequelize)
+const Endereco = EnderecoModel(sequelize, Sequelize)
 const UsuarioPapel = UsuarioPapelModel(sequelize, Sequelize)
-
-Usuario.belongsTo(Cidade, { foreignKey: 'fk_cidade_id' })
-Cidade.hasOne(Usuario, { foreignKey: 'fk_cidade_id' })
-
-Bairro.belongsTo(Cidade, { foreignKey: 'fk_cidade_id' })
-Cidade.hasMany(Bairro, { foreignKey: 'fk_cidade_id' })
-
-Usuario.belongsTo(Bairro, { foreignKey: 'fk_bairro_id' })
-Bairro.hasMany(Usuario, { foreignKey: 'fk_bairro_id' })
 
 Papel.belongsToMany(Usuario, { through: UsuarioPapel })
 Usuario.belongsToMany(Papel, { through: UsuarioPapel })
+
+Usuario.belongsTo(Endereco, { foreignKey: 'fk_endereco_id' })
+Endereco.hasOne(Usuario, { foreignKey: 'fk_endereco_id' })
+
+Endereco.belongsTo(Cidade, { foreignKey: 'fk_cidade_id' })
+Cidade.hasOne(Endereco, { foreignKey: 'fk_cidade_id' })
+
+Cidade.belongsTo(Estado, { foreignKey: 'fk_estado_id' })
+Estado.hasMany(Cidade, { foreignKey: 'fk_estado_id' })
 
 beforeEach(async () => {
   await sequelize.sync({ force: true });
@@ -48,5 +50,5 @@ after(() => {
 })
 
 module.exports = {
-  Usuario, Cidade, Bairro, Papel, UsuarioPapel
+  Usuario, Cidade, Papel, UsuarioPapel, Estado, Endereco
 }

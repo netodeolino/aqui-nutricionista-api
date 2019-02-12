@@ -18,25 +18,27 @@ const all = async (req, res) => {
 const saveUsuario = async (req, res) => {
   const data = JSON.parse(req.body.data)
   const foto = (req.files && req.files.foto) ? req.files.foto : null
-  
-  if (foto && foto.name) {
-    data.foto = foto.name
-  }
 
-  Usuario.create(data)
-    .then(usuario => {
-      if (foto && foto.name) {
-        foto.mv(`public/${usuario.id}-${foto.name}`, function(err) {
-          if (err) {
-            res.status(500).send(err)
-          }
-        })
-      }
-      res.json(usuario)
-    })
-    .catch(err => {
-      res.status(500).send(err)
-    })
+  res.json(data)
+  
+  // if (foto && foto.name) {
+  //   data.foto = foto.name
+  // }
+
+  // Usuario.create(data)
+  //   .then(usuario => {
+  //     if (foto && foto.name) {
+  //       foto.mv(`public/${usuario.id}-${foto.name}`, function(err) {
+  //         if (err) {
+  //           res.status(500).send(err)
+  //         }
+  //       })
+  //     }
+  //     res.json(usuario)
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send(err)
+  //   })
 }
 
 const allNutricionista = async (req, res) => {
