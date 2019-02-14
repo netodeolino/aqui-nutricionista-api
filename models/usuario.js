@@ -9,10 +9,10 @@ module.exports = (sequelize, type) => {
     },
     email: {
       type: type.STRING,
-      isUnique: true,
+      unique: true,
+      allowNull: false,
       validade: {
-        isEmail: true,
-        notNull: true
+        isEmail: true
       }
     },
     nome: type.STRING,

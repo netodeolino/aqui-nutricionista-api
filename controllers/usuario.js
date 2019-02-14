@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 require("dotenv-safe").load()
 
 const { PAPEL_NUTRICIONISTA_NOME, TOKEN_TEMPO_VALIDO } = require('../utils/constants')
-const { Usuario, Papel } = require('../configs/sequelize/sequelize')
+const { Usuario, Papel, Endereco } = require('../configs/sequelize/sequelize')
 
 const all = async (req, res) => {
   Usuario.findAll()
@@ -16,27 +16,35 @@ const all = async (req, res) => {
 }
 
 const saveUsuario = async (req, res) => {
-  const data = JSON.parse(req.body.data)
-  const foto = (req.files && req.files.foto) ? req.files.foto : null
-  
-  if (foto && foto.name) {
-    data.foto = foto.name
-  }
+  try {
+    const data = JSON.parse(req.body.data)
+    const foto = (req.files && req.files.foto) ? req.files.foto : null
 
-  Usuario.create(data)
-    .then(usuario => {
-      if (foto && foto.name) {
-        foto.mv(`public/${usuario.id}-${foto.name}`, function(err) {
-          if (err) {
-            res.status(500).send(err)
-          }
-        })
-      }
-      res.json(usuario)
-    })
-    .catch(err => {
-      res.status(500).send(err)
-    })
+    if (data.endereco == null) {
+      throw 'Usuário não pode ser cadastrado sem um endereço'
+    }
+
+    if (foto && foto.name) {
+      data.foto = foto.name
+    }
+
+    Usuario.create(data, { include: [ Endereco ] })
+      .then(usuario => {
+        if (foto && foto.name) {
+          foto.mv(`public/${usuario.id}-${foto.name}`, function(err) {
+            if (err) {
+              res.status(500).send(err)
+            }
+          })
+        }
+        res.json(usuario)
+      })
+      .catch(err => {
+        res.status(500).send(err)
+      })
+  } catch (error) {
+    res.status(500).send(error)
+  }
 }
 
 const allNutricionista = async (req, res) => {

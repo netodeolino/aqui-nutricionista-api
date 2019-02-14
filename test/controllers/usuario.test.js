@@ -2,12 +2,12 @@ const assert = require('assert')
 const bcrypt = require('bcrypt')
 
 const { PAPEL_NUTRICIONISTA_NOME } = require('../../utils/constants')
-const { Usuario, Papel } = require('../../configs/sequelize/sequelize.test')
+const { Usuario, Papel, Endereco } = require('../../configs/sequelize/sequelize.test')
 
 describe('Controller Usuario', () => {
   describe('all()', () => {
     it('Deve retornar todos os usuários do banco', async () => {
-      await Usuario.create({ nome: 'Teste' })
+      await Usuario.create({ nome: 'Teste', email: 'teste@email.com' })
       const usuario = await Usuario.findAll()
       assert.equal(usuario.length, 1)
     })
@@ -17,6 +17,12 @@ describe('Controller Usuario', () => {
     it('Deve salvar um novo usuário e retornar o mesmo', async () => {
       const usuario = await Usuario.create({ nome: 'Teste', email: 'teste@email.com' })
       assert.equal(usuario.get('nome'), 'Teste')
+    })
+
+    it('Deve salvar um novo usuário com endereço e retornar o mesmo', async () => {
+      const endereco = { rua: 'Teste' }
+      const usuario = await Usuario.create({ nome: 'Teste', email: 'teste@email.com', endereco }, { include: [ Endereco ] })
+      assert.equal(usuario.endereco.get('rua'), 'Teste')
     })
   })
 
