@@ -66,6 +66,10 @@ const allNutricionista = async (req, res) => {
 
 const findOne = async (req, res) => {
   Usuario.findOne({
+    include: [{
+      model: Endereco,
+      required: true
+    }],
     where: {
       id: req.params.id
     }
@@ -79,21 +83,28 @@ const findOne = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, senha } = req.body
-  Usuario.findOne({
-    where: {
-      email: email
-    }
-  }).then(usuario => {
-    if (bcrypt.compareSync(senha, usuario.senha)) {
-      let token = jwt.sign({ email: usuario.email }, process.env.SECRET, { expiresIn: TOKEN_TEMPO_VALIDO })
-      res.json({ token, usuarioId: usuario.id, foto: usuario.foto })
-    } else {
-      throw 'Senha incorreta'
-    }
-  })
-  .catch(err => {
-    res.status(500).send(err)
-  })
+  try {
+    Usuario.findOne({
+      where: {
+        email: email
+      }
+    }).then(usuario => {
+      if (usuario == null) {
+        throw 'Usuário não encontrado para o email digitado'
+      }
+      if (bcrypt.compareSync(senha, usuario.senha)) {
+        let token = jwt.sign({ email: usuario.email }, process.env.SECRET, { expiresIn: TOKEN_TEMPO_VALIDO })
+        res.json({ token, usuarioId: usuario.id, foto: usuario.foto })
+      } else {
+        throw 'Senha incorreta'
+      }
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+  } catch (error) {
+    res.status(500).send(error)
+  }
 }
 
 module.exports = {
