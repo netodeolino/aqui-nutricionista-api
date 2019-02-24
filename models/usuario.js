@@ -17,7 +17,8 @@ module.exports = (sequelize, type) => {
     },
     nome: type.STRING,
     senha: type.STRING,
-    foto: type.STRING
+    foto: type.STRING,
+    telefone: type.STRING
   },
   {
     hooks: {

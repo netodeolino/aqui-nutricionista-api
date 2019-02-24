@@ -7,8 +7,8 @@ const UsuarioModel = require('../../models/usuario')
 const EnderecoModel = require('../../models/endereco')
 const UsuarioPapelModel = require('../../models/usuario_papel')
 
-const sequelize = new Sequelize('aqui_nutricionista_api', 'netodeolino', 'postgres', {
-  host: 'localhost',
+const sequelize = new Sequelize('aqui_nutricionista_api', process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, {
+  host: process.env.DATABASE_HOST,
   dialect: 'postgres',
   pool: {
     max: 10,
