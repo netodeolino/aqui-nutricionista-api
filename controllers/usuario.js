@@ -6,13 +6,17 @@ const { PAPEL_NUTRICIONISTA_NOME, TOKEN_TEMPO_VALIDO } = require('../utils/const
 const { Usuario, Papel, Endereco } = require('../configs/sequelize/sequelize')
 
 const all = async (req, res) => {
-  Usuario.findAll()
-    .then(usuarios => {
-      res.json(usuarios)
-    })
-    .catch(err => {
-      res.status(500).send(err)
-    })
+  try {
+    Usuario.findAll()
+      .then(usuarios => {
+        res.json(usuarios)
+      })
+      .catch(err => {
+        res.status(500).send(err)
+      })
+  } catch (error) {
+    res.status(500).send(error)
+  }
 }
 
 const saveUsuario = async (req, res) => {
@@ -48,37 +52,45 @@ const saveUsuario = async (req, res) => {
 }
 
 const allNutricionista = async (req, res) => {
-  Usuario.findAll({
-    include: [{
-      model: Papel,
-      required: true,
-      where: {
-        nome: PAPEL_NUTRICIONISTA_NOME
-      }
-    }]
-  }).then(usuarios => {
-    res.json(usuarios)
-  })
-  .catch(err => {
-    res.status(500).send(err)
-  })
+  try {
+    Usuario.findAll({
+      include: [{
+        model: Papel,
+        required: true,
+        where: {
+          nome: PAPEL_NUTRICIONISTA_NOME
+        }
+      }]
+    }).then(usuarios => {
+      res.json(usuarios)
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+  } catch (error) {
+    res.status(500).send(error)
+  }
 }
 
 const findOne = async (req, res) => {
-  Usuario.findOne({
-    include: [{
-      model: Endereco,
-      required: true
-    }],
-    where: {
-      id: req.params.id
-    }
-  }).then(usuario => {
-    res.json(usuario)
-  })
-  .catch(err => {
-    res.status(500).send(err)
-  })
+  try {
+    Usuario.findOne({
+      include: [{
+        model: Endereco,
+        required: true
+      }],
+      where: {
+        id: req.params.id
+      }
+    }).then(usuario => {
+      res.json(usuario)
+    })
+    .catch(err => {
+      res.status(500).send(err)
+    })
+  } catch (error) {
+    res.status(500).send(error)
+  }
 }
 
 const login = async (req, res) => {
